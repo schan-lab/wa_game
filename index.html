@@ -39,7 +39,7 @@
     }
     // ボタンの数と最大値を指定
     const buttonCount = 50;
-    const maxNumber = 8;
+    const maxNumber = 9;
     function generateProblem() {
         
         var a = getRandomNumber();
@@ -47,7 +47,7 @@
         var b = getRandomNumber();
         var problem = a + ' + ' + b;
         var answer = a + b;
-        if (answer < 10) {
+        if (answer <= 10) {
           break;
         }
     }
