@@ -40,7 +40,7 @@
       location.reload();
     }
     // ボタンの数と最大値を指定
-    const buttonCount = 48;
+    const buttonCount = 50;
     const maxNumber = 9;
     function generateProblem() {
         
@@ -62,17 +62,6 @@
     function getRandomNumber() {
       return Math.floor(Math.random() * maxNumber) + 1; // 1桁のランダムな数値を生成
     }
-
-    // function generateProblem() {
-    //   var a = getRandomNumber();
-    //   var b = getRandomNumber();
-    //   var problem = a + ' + ' + b;
-    //   var answer = a + b;
-    //   return {
-    //     problem: problem,
-    //     answer: answer
-    //   };
-    // }
 
     function initializeGame() {
       var buttonsContainer = document.getElementById('buttonsContainer');
