@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>学習ゲーム</title>
+  <style>
+    .button {
+      width: 120px;
+      height: 40px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+<div>
+    <h1>たしざんゲーム</h1>
+    <button class="reload" onclick="reload()">もういっかい</button>
+
+</div>
+  <div id="problem">
+      <button class="button" onclick="showAnswer(0)"></button>
+      <button class="button" onclick="showAnswer(1)"></button>
+      <button class="button" onclick="showAnswer(2)"></button>
+      <button class="button" onclick="showAnswer(3)"></button>
+      <button class="button" onclick="showAnswer(4)"></button>
+  </div>
+      
+  <script>
+    function reload(){
+      location.reload();
+    }
+    function getRandomNumber() {
+      return Math.floor(Math.random() * 9) + 1;
+    }
+
+    function generateProblem() {
+      while (true) {
+      
+        var a = getRandomNumber();
+        var b = getRandomNumber();
+        var problem = a + ' + ' + b;
+        var answer = a + b;
+        if (answer < 10) {
+          break;
+        }
+    }
+      return {
+        problem: problem,
+        answer: answer
+      };
+    }
+
+    function initializeGame() {
+      var buttons = document.getElementsByClassName('button');
+      for (var i = 0; i < buttons.length; i++) {
+        var button = buttons[i];
+        var problem = generateProblem();
+        button.innerText = problem.problem;
+        button.dataset.answer = problem.answer;
+        button.disabled = false;
+      }
+    }
+
+    function showAnswer(buttonIndex) {
+      var buttons = document.getElementsByClassName('button');
+      var button = buttons[buttonIndex];
+      button.innerText = button.dataset.answer;
+      button.disabled = true;
+    }
+
+    initializeGame();
+  </script>
+</body>
+</html>
