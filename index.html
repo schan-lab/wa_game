@@ -11,31 +11,17 @@
   </style>
 </head>
 <body>
-<div>
-    <h1>たしざんゲーム</h1>
-    <button class="reload" onclick="reload()">もういっかい</button>
+  <h1>学習ゲーム</h1>
+  <div id="buttonsContainer"></div>
 
-</div>
-  <div id="problem">
-      <button class="button" onclick="showAnswer(0)"></button>
-      <button class="button" onclick="showAnswer(1)"></button>
-      <button class="button" onclick="showAnswer(2)"></button>
-      <button class="button" onclick="showAnswer(3)"></button>
-      <button class="button" onclick="showAnswer(4)"></button>
-  </div>
-      
   <script>
-    function reload(){
-      location.reload();
-    }
-    function getRandomNumber() {
-      return Math.floor(Math.random() * 9) + 1;
-    }
-
+    // ボタンの数と最大値を指定
+    const buttonCount = 50;
+    const maxNumber = 8;
     function generateProblem() {
-      while (true) {
-      
+        
         var a = getRandomNumber();
+    while (true) {
         var b = getRandomNumber();
         var problem = a + ' + ' + b;
         var answer = a + b;
@@ -49,20 +35,39 @@
       };
     }
 
+    function getRandomNumber() {
+      return Math.floor(Math.random() * maxNumber) + 1; // 1桁のランダムな数値を生成
+    }
+
+    // function generateProblem() {
+    //   var a = getRandomNumber();
+    //   var b = getRandomNumber();
+    //   var problem = a + ' + ' + b;
+    //   var answer = a + b;
+    //   return {
+    //     problem: problem,
+    //     answer: answer
+    //   };
+    // }
+
     function initializeGame() {
-      var buttons = document.getElementsByClassName('button');
-      for (var i = 0; i < buttons.length; i++) {
-        var button = buttons[i];
+      var buttonsContainer = document.getElementById('buttonsContainer');
+      buttonsContainer.innerHTML = ''; // ボタンを初期化
+
+      for (var i = 0; i < buttonCount; i++) {
         var problem = generateProblem();
+
+        var button = document.createElement('button');
+        button.className = 'button';
         button.innerText = problem.problem;
         button.dataset.answer = problem.answer;
-        button.disabled = false;
+        button.addEventListener('click', showAnswer);
+        buttonsContainer.appendChild(button);
       }
     }
 
-    function showAnswer(buttonIndex) {
-      var buttons = document.getElementsByClassName('button');
-      var button = buttons[buttonIndex];
+    function showAnswer(event) {
+      var button = event.target;
       button.innerText = button.dataset.answer;
       button.disabled = true;
     }
