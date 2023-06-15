@@ -27,6 +27,9 @@
     margin-left: calc(-50vw + 50%);
     background-color: lightcoral;
     }
+    .opacity {
+    filter: opacity(0.4);
+    }
   </style>
 </head>
 <body>
@@ -35,7 +38,7 @@
   <div id="buttonsContainer"></div>
 
   <button class="full-width" onclick="reload()" >もういちど</button>
-
+  <img class="opacity" height="200px" src="./fig/hari.png">
   <script>
     function reload() {
       location.reload();
