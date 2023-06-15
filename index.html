@@ -15,13 +15,28 @@
       background-color: pink;
       cursor: default;
     }
+    .disabled {
+      color: red;
+      cursor: not-allowed;
+    }
+    .full-width {
+    width: 100vw;
+    height: 40px;
+    margin-left: calc(-50vw + 50%);
+    background-color: lightcoral;
+    }
   </style>
 </head>
 <body>
   <h1>たしざんゲーム</h1>
   <div id="buttonsContainer"></div>
 
+  <button class="full-width" onclick="reload()" >もう一度</button>
+
   <script>
+    function reload() {
+      location.reload();
+    }
     // ボタンの数と最大値を指定
     const buttonCount = 50;
     const maxNumber = 8;
