@@ -1,96 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>学習ゲーム</title>
-  <style>
-    .button {
-      width: 180px;
-      height: 60px;
-      font-size: 28px;
-      background-color: lightblue;
-      color: black;
-      transition: background-color 0.3s;
-    }
-
-    .button.clicked {
-      background-color: pink;
-      cursor: default;
-      color: black;
-    }
-    .disabled {
-      cursor: not-allowed;
-    }
-    .full-width {
-    width: 100vw;
-    height: 40px;
-    font-size: 24px;
-    margin-left: calc(-50vw + 50%);
-    background-color: lightcoral;
-    }
-    .opacity {
-    filter: opacity(0.4);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
-  <h1>たしざんゲーム</h1>
-  <div><p>v1.4</p></div>
-  <div id="buttonsContainer"></div>
-
-  <button class="full-width" onclick="reload()" >もういちど</button>
-  <!-- <img class="opacity" height="200px" src="./fig/hari.png"> -->
-  <script>
-    function reload() {
-      location.reload();
-    }
-    // ボタンの数と最大値を指定
-    const buttonCount = 49;
-    const maxNumber = 9;
-    function generateProblem() {
-        
-        var a = getRandomNumber();
-    while (true) {
-        var b = getRandomNumber();
-        var problem = a + ' + ' + b;
-        var answer = a + b;
-        if (answer <= 10) {
-          break;
-        }
-    }
-      return {
-        problem: problem,
-        answer: answer
-      };
-    }
-
-    function getRandomNumber() {
-      return Math.floor(Math.random() * maxNumber) + 1; // 1桁のランダムな数値を生成
-    }
-
-    function initializeGame() {
-      var buttonsContainer = document.getElementById('buttonsContainer');
-      buttonsContainer.innerHTML = ''; // ボタンを初期化
-
-      for (var i = 0; i < buttonCount; i++) {
-        var problem = generateProblem();
-
-        var button = document.createElement('button');
-        button.className = 'button';
-        button.innerText = problem.problem;
-        button.dataset.answer = problem.answer;
-        button.addEventListener('click', showAnswer);
-        buttonsContainer.appendChild(button);
-      }
-    }
-
-    function showAnswer(event) {
-      var button = event.target;
-      button.innerText = button.dataset.answer;
-      button.disabled = true;
-      button.classList.add('clicked');
-    }
-
-    initializeGame();
-  </script>
+    <a href="wa.html">足し算</a>
 </body>
 </html>
