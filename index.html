@@ -1,13 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+  <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
 </head>
 <body>
-    <a href="wa.html">たしざん</a>
-    <a href="sa.html">ひきざん</a>
+    <ons-splitter>
+        <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
+          <ons-page>
+            <ons-list>
+              <ons-list-item onclick="location.href='wa.html'" tappable>
+                たしざん
+              </ons-list-item>
+              <ons-list-item onclick="location.href='sa.html'" tappable>
+                ひきざん
+              </ons-list-item>
+            </ons-list>
+          </ons-page>
+        </ons-splitter-side>
+        <ons-splitter-content id="content" page="home.html"></ons-splitter-content>
+      </ons-splitter>
+
+
+<template id="home.html">
+    <ons-page>
+      <ons-toolbar>
+        <div class="left">
+          <ons-toolbar-button onclick="fn.open()">
+            <ons-icon icon="md-menu"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center">
+          けいさんゲーム
+        </div>
+      </ons-toolbar>
+      <section style="padding: 16px">
+        <ons-button modifier="large" onclick="location.href='wa.html'">たしざん</ons-button>
+        <p></p>
+        <ons-button modifier="large" onclick="location.href='sa.html'">ひきざん</ons-button>
+      </section>
+
+
+    </ons-page>
+</template>
+
+<script>
+    window.fn = {};
+
+    window.fn.open = function() {
+    var menu = document.getElementById('menu');
+    menu.open();
+    };
+
+    window.fn.load = function(page) {
+    var content = document.getElementById('content');
+    var menu = document.getElementById('menu');
+    content.load(page)
+        .then(menu.close.bind(menu));
+    };
+</script>
 </body>
 </html>
