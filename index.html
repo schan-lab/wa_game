@@ -1,29 +1,253 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>けいさんゲーム</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
   <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
   <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    
+    body {
+      background-color: #f9f7ff;
+      background-image: linear-gradient(135deg, #f9f7ff 0%, #fff6e5 100%);
+      padding: 0;
+      margin: 0;
+      min-height: 100vh;
+      overscroll-behavior: none;
+    }
+    
+    .page__content {
+      text-align: center;
+      padding: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .page__title {
+      color: #6a4dc4;
+      font-size: 2.6rem;
+      margin: 24px 0 16px;
+      text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.7);
+    }
+
+    .page__subtitle {
+      color: #f87da9;
+      font-size: 1.8rem;
+      margin-bottom: 40px;
+      font-weight: bold;
+    }
+    
+    .game-buttons-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      max-width: 500px;
+    }
+    
+    .game-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 180px;
+      border-radius: 24px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      padding: 20px;
+      font-size: 2rem;
+      font-weight: bold;
+      line-height: 1.3;
+      transition: all 0.3s ease;
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .game-button:active {
+      transform: translateY(3px);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .addition-button {
+      background-color: #4dabf7;
+      color: white;
+    }
+    
+    .subtraction-button {
+      background-color: #ff6b6b;
+      color: white;
+    }
+    
+    .button-icon {
+      font-size: 3.5rem;
+      margin: 5px 0 15px;
+    }
+    
+    .button-text {
+      font-size: 2.2rem;
+    }
+
+    ons-list-item {
+      font-size: 1.5rem !important;
+      line-height: 1.5 !important;
+      min-height: 70px !important;
+    }
+    
+    ons-toolbar .center {
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+    
+    ons-toolbar-button {
+      transform: scale(1.2);
+      margin-left: 8px;
+    }
+    
+    /* 装飾要素 */
+    .decoration {
+      position: absolute;
+      z-index: -1;
+    }
+    
+    .circle-1 {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-color: rgba(255, 220, 100, 0.5);
+      top: 10%;
+      left: 10%;
+    }
+    
+    .circle-2 {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background-color: rgba(100, 220, 255, 0.4);
+      bottom: 15%;
+      right: 10%;
+    }
+    
+    .star-1 {
+      font-size: 60px;
+      color: rgba(255, 180, 100, 0.4);
+      top: 20%;
+      right: 25%;
+    }
+    
+    .star-2 {
+      font-size: 45px;
+      color: rgba(180, 220, 100, 0.4);
+      bottom: 30%;
+      left: 15%;
+    }
+    
+    .version {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-size: 0.9rem;
+      color: #999;
+    }
+    
+    /* タブレット向け調整 */
+    @media (min-width: 600px) and (max-width: 1024px) {
+      .page__content {
+        padding: 32px;
+      }
+      
+      .page__subtitle {
+        font-size: 2rem;
+        margin-bottom: 50px;
+      }
+      
+      .game-button {
+        height: 200px;
+        border-radius: 28px;
+      }
+      
+      .button-icon {
+        font-size: 4rem;
+        margin-bottom: 20px;
+      }
+      
+      .button-text {
+        font-size: 2.4rem;
+      }
+    }
+    
+    /* 横向き対応 */
+    @media (min-width: 768px) and (orientation: landscape) {
+      .game-buttons-container {
+        flex-direction: row;
+        max-width: 800px;
+      }
+      
+      .game-button {
+        height: 200px;
+      }
+    }
+    
+    /* スマホ向け調整 */
+    @media (max-width: 599px) {
+      .page__subtitle {
+        font-size: 1.6rem;
+      }
+      
+      .game-button {
+        height: 150px;
+      }
+      
+      .button-icon {
+        font-size: 2.8rem;
+      }
+      
+      .button-text {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <ons-splitter>
-        <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
-          <ons-page>
-            <ons-list>
-              <ons-list-item onclick="location.href='wa.html'" tappable>
-                たしざん
-              </ons-list-item>
-              <ons-list-item onclick="location.href='sa.html'" tappable>
-                ひきざん
-              </ons-list-item>
-            </ons-list>
-          </ons-page>
-        </ons-splitter-side>
-        <ons-splitter-content id="content" page="home.html"></ons-splitter-content>
-      </ons-splitter>
+  <ons-splitter>
+    <ons-splitter-side id="menu" side="left" width="280px" collapse swipeable>
+      <ons-page>
+        <ons-list>
+          <ons-list-header>けいさんゲーム</ons-list-header>
+          <ons-list-item onclick="location.href='wa.html'" tappable>
+            <div class="left">
+              <ons-icon icon="md-plus-circle" style="color: #4dabf7; font-size: 32px;"></ons-icon>
+            </div>
+            <div class="center">
+              たしざん
+            </div>
+          </ons-list-item>
+          <ons-list-item onclick="location.href='sa.html'" tappable>
+            <div class="left">
+              <ons-icon icon="md-minus-circle" style="color: #ff6b6b; font-size: 32px;"></ons-icon>
+            </div>
+            <div class="center">
+              ひきざん
+            </div>
+          </ons-list-item>
+        </ons-list>
+      </ons-page>
+    </ons-splitter-side>
+    <ons-splitter-content id="content" page="home.html"></ons-splitter-content>
+  </ons-splitter>
 
-
-<template id="home.html">
+  <template id="home.html">
     <ons-page>
       <ons-toolbar>
         <div class="left">
@@ -35,30 +259,73 @@
           けいさんゲーム
         </div>
       </ons-toolbar>
-      <section style="padding: 16px">
-        <ons-button modifier="large" onclick="location.href='wa.html'">たしざん</ons-button>
-        <p></p>
-        <ons-button modifier="large" onclick="location.href='sa.html'">ひきざん</ons-button>
-      </section>
 
+      <div class="page__content">
+        <h2 class="page__subtitle">どちらであそぶ？</h2>
 
+        <!-- 装飾要素 -->
+        <div class="decoration circle-1"></div>
+        <div class="decoration circle-2"></div>
+        <div class="decoration star-1">★</div>
+        <div class="decoration star-2">★</div>
+
+        <div class="game-buttons-container">
+          <button class="game-button addition-button" onclick="location.href='wa.html'">
+            <span class="button-icon">+</span>
+            <span class="button-text">たしざん</span>
+          </button>
+
+          <button class="game-button subtraction-button" onclick="location.href='sa.html'">
+            <span class="button-icon">−</span>
+            <span class="button-text">ひきざん</span>
+          </button>
+        </div>
+
+        <div class="version">v1.7</div>
+      </div>
     </ons-page>
-</template>
+  </template>
 
-<script>
+  <script>
     window.fn = {};
 
     window.fn.open = function() {
-    var menu = document.getElementById('menu');
-    menu.open();
+      var menu = document.getElementById('menu');
+      menu.open();
     };
 
     window.fn.load = function(page) {
-    var content = document.getElementById('content');
-    var menu = document.getElementById('menu');
-    content.load(page)
+      var content = document.getElementById('content');
+      var menu = document.getElementById('menu');
+      content.load(page)
         .then(menu.close.bind(menu));
     };
-</script>
+    
+    // タブレット向け最適化
+    document.addEventListener('deviceready', function() {
+      // ズーム無効化
+      if (typeof cordova !== 'undefined' && cordova.plugins && cordova.plugins.screensize) {
+        cordova.plugins.screensize.setFixedScale(true);
+      }
+      
+      // 画面の向きを検出して調整
+      window.addEventListener('orientationchange', adjustLayout);
+      
+      function adjustLayout() {
+        // 向きに合わせてレイアウト調整
+        const isLandscape = window.innerWidth > window.innerHeight;
+        const container = document.querySelector('.game-buttons-container');
+        
+        if (isLandscape && window.innerWidth >= 768) {
+          container.style.flexDirection = 'row';
+        } else {
+          container.style.flexDirection = 'column';
+        }
+      }
+      
+      // 初期調整
+      adjustLayout();
+    }, false);
+  </script>
 </body>
 </html>

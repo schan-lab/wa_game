@@ -2,45 +2,200 @@
 <html>
 <head>
   <title>学習ゲーム</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    
+    body {
+      background-color: #f5f7fa;
+      background-image: linear-gradient(135deg, #f9f7ff 0%, #e3f4ff 100%);
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overscroll-behavior: none;
+    }
+    
+    h1 {
+      color: #3366cc;
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 3rem;
+      text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.7);
+    }
+    
+    .version {
+      color: #666;
+      margin-bottom: 25px;
+      font-size: 1rem;
+    }
+    
+    #buttonsContainer {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 15px;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto 30px;
+    }
+    
     .button {
-      width: 180px;
-      height: 60px;
-      font-size: 28px;
-      background-color: lightblue;
-      color: black;
-      transition: background-color 0.3s;
+      width: 100%;
+      height: 70px;
+      font-size: 26px;
+      background-color: #4dabf7;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8px;
     }
-
+    
+    .button:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
     .button.clicked {
-      background-color: pink;
+      background-color: #72cc82;
       cursor: default;
-      color: black;
+      color: white;
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
+    
+    .reset-button {
+      width: 100%;
+      max-width: 500px;
+      height: 70px;
+      font-size: 28px;
+      margin-top: 40px;
+      background-color: #ff6b6b;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    
+    .reset-button:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
     .disabled {
       cursor: not-allowed;
+      opacity: 0.7;
     }
-    .full-width {
-    width: 100vw;
-    height: 40px;
-    font-size: 24px;
-    margin-left: calc(-50vw + 50%);
-    background-color: lightcoral;
+    
+    /* タブレット向け調整 */
+    @media (min-width: 600px) and (max-width: 1024px) {
+      body {
+        padding: 25px;
+      }
+      
+      h1 {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+      }
+      
+      #buttonsContainer {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 18px;
+      }
+      
+      .button {
+        height: 80px;
+        font-size: 30px;
+        border-radius: 14px;
+      }
+      
+      .reset-button {
+        height: 80px;
+        font-size: 32px;
+        max-width: 600px;
+      }
     }
-    .opacity {
-    filter: opacity(0.4);
+    
+    /* 横向き対応 */
+    @media (min-width: 768px) and (orientation: landscape) {
+      #buttonsContainer {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        max-width: 1000px;
+      }
+    }
+    
+    /* スマホ向け調整 */
+    @media (max-width: 599px) {
+      h1 {
+        font-size: 2.6rem;
+      }
+      
+      #buttonsContainer {
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        gap: 12px;
+      }
+      
+      .button {
+        height: 60px;
+        font-size: 22px;
+      }
+      
+      .reset-button {
+        height: 60px;
+        font-size: 24px;
+      }
+    }
+    
+    /* ホームボタン */
+    .home-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 50px;
+      height: 50px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      font-size: 28px;
+      color: #3366cc;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      z-index: 10;
+    }
+    
+    .home-button:active {
+      transform: scale(0.95);
     }
   </style>
 </head>
 <body>
+  <button class="home-button" onclick="location.href='index.html'">⌂</button>
   <h1>たしざんゲーム</h1>
-  <div><p>v1.5</p></div>
+  <div class="version"><p>v1.7</p></div>
   <div id="buttonsContainer"></div>
-  <br>
-  <br>
-  <br>
-  <button class="full-width" onclick="reload()" >もういちど</button>
-  <!-- <img class="opacity" height="200px" src="./fig/hari.png"> -->
+  <button class="reset-button" onclick="reload()">もういちど</button>
+  
   <script>
     function reload() {
       location.reload();
@@ -82,7 +237,7 @@
         button.dataset.answer = problem.answer;
         button.addEventListener('click', showAnswer);
         buttonsContainer.appendChild(button);
-      }フリック
+      }
     }
 
     function showAnswer(event) {
@@ -92,7 +247,30 @@
       button.classList.add('clicked');
     }
 
-    initializeGame();
+    // 画面サイズに応じたレイアウト調整
+    function adjustLayout() {
+      const isTablet = window.innerWidth >= 600 && window.innerWidth <= 1024;
+      const isLandscape = window.innerWidth > window.innerHeight;
+      
+      const buttonsContainer = document.getElementById('buttonsContainer');
+      
+      if (isTablet) {
+        if (isLandscape) {
+          buttonsContainer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(170px, 1fr))';
+        } else {
+          buttonsContainer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(160px, 1fr))';
+        }
+      }
+    }
+    
+    // 初期化
+    window.addEventListener('load', function() {
+      initializeGame();
+      adjustLayout();
+    });
+    
+    window.addEventListener('resize', adjustLayout);
+    window.addEventListener('orientationchange', adjustLayout);
   </script>
 </body>
 </html>
