@@ -1,223 +1,291 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-  <title>学習ゲーム</title>
+  <title>ひきざんゲーム</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --ink: #2f2618;
+      --ink-soft: #6b5c45;
+      --sand: #fff1e8;
+      --blush: #ffe8e2;
+      --coral: #e76f51;
+      --coral-deep: #d45a3e;
+      --success: #3cb371;
+      --leaf: #2a9d8f;
+      --white: #fffdf8;
+      --shadow: 0 8px 18px rgba(231, 111, 81, 0.18);
+      --font: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    }
+
     * {
       box-sizing: border-box;
-      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+      font-family: var(--font);
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
     }
-    
+
     body {
-      background-color: #f5f7fa;
-      background-image: linear-gradient(135deg, #fff6e5 0%, #ffefef 100%);
-      color: #333;
       margin: 0;
-      padding: 20px;
+      padding: 72px 20px 32px;
+      min-height: 100vh;
+      overscroll-behavior: none;
+      color: var(--ink);
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
-      overscroll-behavior: none;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(231, 111, 81, 0.2) 0 110px, transparent 111px),
+        radial-gradient(circle at 90% 16%, rgba(233, 168, 37, 0.18) 0 90px, transparent 91px),
+        linear-gradient(165deg, var(--blush) 0%, var(--sand) 100%);
+      background-attachment: fixed;
+      animation: fade-in 0.5s ease both;
     }
-    
-    h1 {
-      color: #3366cc;
-      text-align: center;
-      margin-bottom: 15px;
-      font-size: 3rem;
-      text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.7);
+
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
-    
-    .version {
-      color: #666;
-      margin-bottom: 25px;
-      font-size: 1rem;
+
+    @keyframes pop {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.06); }
+      100% { transform: scale(1); }
     }
-    
-    #buttonsContainer {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 15px;
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto 30px;
-    }
-    
-    .button {
-      width: 100%;
-      height: 70px;
-      font-size: 26px;
-      background-color: #ff6b6b;
-      color: white;
+
+    .home-button {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      width: 52px;
+      height: 52px;
       border: none;
-      border-radius: 12px;
-      transition: all 0.2s ease;
+      border-radius: 18px;
+      background: rgba(255, 253, 248, 0.9);
+      box-shadow: 0 4px 14px rgba(47, 38, 24, 0.12);
+      color: var(--coral-deep);
+      font-size: 1.6rem;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+      z-index: 10;
+      transition: transform 0.15s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .home-button:active {
+      transform: scale(0.94);
+    }
+
+    .header {
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
+      gap: 14px;
+      margin-bottom: 8px;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .header-mascot {
+      width: 72px;
+      height: auto;
+      filter: drop-shadow(0 6px 10px rgba(47, 38, 24, 0.12));
+      animation: bob 3.2s ease-in-out infinite;
+    }
+
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .title-block {
+      text-align: left;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--coral-deep);
+      font-size: clamp(2rem, 6vw, 2.8rem);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+    }
+
+    .version {
+      margin: 0 0 22px;
+      color: var(--ink-soft);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    #buttonsContainer {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto 8px;
+    }
+
+    .button {
+      width: 100%;
+      height: 68px;
+      font-size: 1.45rem;
+      font-weight: 700;
+      background: linear-gradient(180deg, #f08a6b 0%, #e76f51 100%);
+      color: var(--white);
+      border: none;
+      border-radius: 18px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 8px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
     }
-    
-    .button:active {
-      transform: translateY(2px);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+    .button:hover:not(:disabled) {
+      filter: brightness(1.04);
+      transform: translateY(-1px);
     }
-    
+
+    .button:active:not(:disabled) {
+      transform: translateY(1px);
+      box-shadow: 0 4px 10px rgba(231, 111, 81, 0.16);
+    }
+
     .button.clicked {
-      background-color: #72cc82;
+      background: linear-gradient(180deg, #5fd08a 0%, #3cb371 100%);
+      box-shadow: 0 4px 12px rgba(60, 179, 113, 0.22);
       cursor: default;
-      color: white;
-      transform: translateY(0);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      animation: pop 0.28s ease;
     }
-    
+
     .reset-button {
       width: 100%;
-      max-width: 500px;
-      height: 70px;
-      font-size: 28px;
-      margin-top: 40px;
-      background-color: #4dabf7;
-      color: white;
+      max-width: 420px;
+      height: 64px;
+      margin-top: 28px;
+      font-size: 1.45rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      background: linear-gradient(135deg, #3db8c9 0%, #2a9d8f 100%);
+      color: var(--white);
       border: none;
-      border-radius: 12px;
+      border-radius: 20px;
       cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 18px rgba(42, 157, 143, 0.22);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
-    
+
     .reset-button:active {
-      transform: translateY(3px);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transform: translateY(2px);
+      box-shadow: 0 4px 10px rgba(42, 157, 143, 0.18);
     }
-    
-    .disabled {
-      cursor: not-allowed;
-      opacity: 0.7;
+
+    .footer-mascot {
+      width: 120px;
+      height: auto;
+      margin-top: 28px;
+      opacity: 0.92;
+      filter: drop-shadow(0 8px 12px rgba(47, 38, 24, 0.1));
     }
-    
-    /* タブレット向け調整 */
+
     @media (min-width: 600px) and (max-width: 1024px) {
-      body {
-        padding: 25px;
-      }
-      
-      h1 {
-        font-size: 3.5rem;
-        margin-bottom: 20px;
-      }
-      
+      body { padding: 80px 25px 36px; }
+
       #buttonsContainer {
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        gap: 18px;
+        gap: 14px;
       }
-      
+
       .button {
-        height: 80px;
-        font-size: 30px;
-        border-radius: 14px;
+        height: 76px;
+        font-size: 1.6rem;
+        border-radius: 20px;
       }
-      
+
       .reset-button {
-        height: 80px;
-        font-size: 32px;
-        max-width: 600px;
+        height: 72px;
+        font-size: 1.6rem;
+        max-width: 520px;
       }
     }
-    
-    /* 横向き対応 */
+
     @media (min-width: 768px) and (orientation: landscape) {
       #buttonsContainer {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         max-width: 1000px;
       }
     }
-    
-    /* スマホ向け調整 */
+
     @media (max-width: 599px) {
-      h1 {
-        font-size: 2.6rem;
-      }
-      
+      .header-mascot { width: 58px; }
+
+      h1 { font-size: 1.85rem; }
+
       #buttonsContainer {
         grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-        gap: 12px;
+        gap: 10px;
       }
-      
+
       .button {
-        height: 60px;
-        font-size: 22px;
+        height: 58px;
+        font-size: 1.2rem;
+        border-radius: 16px;
       }
-      
+
       .reset-button {
-        height: 60px;
-        font-size: 24px;
+        height: 58px;
+        font-size: 1.25rem;
       }
-    }
-    
-    /* ホームボタン */
-    .home-button {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      width: 50px;
-      height: 50px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-      font-size: 28px;
-      color: #3366cc;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      z-index: 10;
-    }
-    
-    .home-button:active {
-      transform: scale(0.95);
+
+      .footer-mascot { width: 96px; }
     }
   </style>
 </head>
 <body>
-  <button class="home-button" onclick="location.href='index.html'">⌂</button>
-  <h1>ひきざんゲーム</h1>
-  <div class="version"><p>v1.7</p></div>
+  <button class="home-button" onclick="location.href='index.html'" aria-label="ホームへ">⌂</button>
+
+  <header class="header">
+    <img class="header-mascot" src="./fig/gecko.png" alt="" width="72" height="72">
+    <div class="title-block">
+      <h1>ひきざんゲーム</h1>
+    </div>
+  </header>
+  <p class="version">v1.8</p>
+
   <div id="buttonsContainer"></div>
   <button class="reset-button" onclick="reload()">もういちど</button>
-  <!-- <img class="opacity" height="200px" src="./fig/hari.png"> -->
+  <img class="footer-mascot" src="./fig/gecko.png" alt="レオパードゲッコー" height="120">
+
   <script>
     function reload() {
       location.reload();
     }
-    // ボタンの数と最大値を指定
+
     const buttonCount = 49;
     const maxNumber = 9;
+
     function generateProblem() {
-    while (true) {
-      var a = getRandomNumber();
-      if (a > 1) {
-        break;
+      while (true) {
+        var a = getRandomNumber();
+        if (a > 1) {
+          break;
+        }
       }
-    }
-    while (true) {
+      while (true) {
         var b = getRandomNumber();
         var problem = a + ' - ' + b;
         var answer = a - b;
         if (answer > 0) {
           break;
         }
-    }
+      }
       return {
         problem: problem,
         answer: answer
@@ -225,16 +293,15 @@
     }
 
     function getRandomNumber() {
-      return Math.floor(Math.random() * maxNumber) + 1; // 1桁のランダムな数値を生成
+      return Math.floor(Math.random() * maxNumber) + 1;
     }
 
     function initializeGame() {
       var buttonsContainer = document.getElementById('buttonsContainer');
-      buttonsContainer.innerHTML = ''; // ボタンを初期化
+      buttonsContainer.innerHTML = '';
 
       for (var i = 0; i < buttonCount; i++) {
         var problem = generateProblem();
-
         var button = document.createElement('button');
         button.className = 'button';
         button.innerText = problem.problem;
@@ -251,13 +318,11 @@
       button.classList.add('clicked');
     }
 
-    // 画面サイズに応じたレイアウト調整
     function adjustLayout() {
       const isTablet = window.innerWidth >= 600 && window.innerWidth <= 1024;
       const isLandscape = window.innerWidth > window.innerHeight;
-      
       const buttonsContainer = document.getElementById('buttonsContainer');
-      
+
       if (isTablet) {
         if (isLandscape) {
           buttonsContainer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(170px, 1fr))';
@@ -266,13 +331,12 @@
         }
       }
     }
-    
-    // 初期化
+
     window.addEventListener('load', function() {
       initializeGame();
       adjustLayout();
     });
-    
+
     window.addEventListener('resize', adjustLayout);
     window.addEventListener('orientationchange', adjustLayout);
   </script>
